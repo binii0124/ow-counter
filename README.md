@@ -1,73 +1,38 @@
-# React + TypeScript + Vite
+# Overwatch 2 Counter-Picker (Vibe Coded)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Gemini CLI 에이전트와 대화하며(Vibe Coding) 제작한 오버워치 2 카운터 픽 대시보드입니다.
 
-Currently, two official plugins are available:
+## 🚀 소개
+이 프로젝트는 AI 에이전트와 협업하여 설계 및 구현된 실시간 오버워치 2 영웅 카운터 가이드입니다. 세련된 게이밍 UI와 실시간 API 데이터를 결합하여 최적의 전략적 선택을 도와줍니다.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ 핵심 기능
+- **OverFast API 연동**: 실시간으로 Blizzard 공식 데이터를 페칭하여 영웅 목록과 초상화를 업데이트합니다.
+- **하이브리드 로컬 상성 매핑**: `constants.ts`에 정의된 정밀한 카운터 로직을 기반으로 즉각적인 전술 정보를 제공합니다.
+- **글래스모피즘 기반 게이밍 UI**: 오버워치 2 특유의 미래지향적이고 강렬한 디자인 언어를 반영한 인터페이스를 제공합니다.
 
-## React Compiler
+## 🛠 기술 스택
+- **Framework**: React 18 (TypeScript)
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **API**: OverFast API (Overwatch 2 API)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 💻 실행 방법
 
-## Expanding the ESLint configuration
+1. 저장소 클론:
+   ```bash
+   git clone https://github.com/binii0124/ow-counter.git
+   cd ow-counter
+   ```
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+2. 패키지 설치:
+   ```bash
+   npm install
+   ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+3. 개발 서버 실행:
+   ```bash
+   npm run dev
+   ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 📝 라이선스
+MIT License
