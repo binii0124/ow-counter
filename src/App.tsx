@@ -9,8 +9,6 @@ interface APIHero {
   role: string;
 }
 
-type RoleFilter = 'all' | 'tank' | 'damage' | 'support';
-
 function App() {
   const [heroes, setHeroes] = useState<APIHero[]>([]);
   const [loading, setLoading] = useState(true);
