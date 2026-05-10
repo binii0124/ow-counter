@@ -93,41 +93,87 @@ function App() {
     <div className="mb-10 relative z-10">
       <div className="flex items-center gap-4 mb-5">
         <div className={`w-1.5 h-6 ${colorClass} rounded-full`}></div>
-        <h3 className="text-2xl font-black italic uppercase tracking-wider text-white flex items-baseline gap-2">
+        <h3 className="text-xl sm:text-2xl font-black italic uppercase tracking-wider text-white flex items-baseline gap-2">
           {roleMap[role] || title}
-          <span className="text-slate-500 text-sm font-normal uppercase tracking-widest ml-1">
+          <span className="text-slate-500 text-xs sm:text-sm font-normal uppercase tracking-widest ml-1">
             {title}
           </span>
-          <span className="text-slate-600 text-lg font-normal ml-2">[{heroesList.length}]</span>
+          <span className="text-slate-600 text-base sm:text-lg font-normal ml-2">[{heroesList.length}]</span>
         </h3>
       </div>
-      <div className="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 xl:grid-cols-14 gap-3">
+      <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-14 gap-3 sm:gap-4">
         {heroesList.map((hero) => (
-          <button
-            key={hero.key}
-            onClick={() => setSelectedHero(hero)}
-            className={`group relative w-full transition-all duration-75 ${
-              selectedHero?.key === hero.key ? 'scale-110 z-20' : 'hover:scale-110 hover:z-10'
-            }`}
-          >
-            <div className="absolute inset-[-10px] bg-orange-500/0 group-hover:bg-orange-500/20 blur-xl rounded-full transition-all duration-150 pointer-events-none" />
-            
-            <div className={`relative aspect-square skew-x-[-10deg] border transition-all duration-100 overflow-hidden ${
-              selectedHero?.key === hero.key 
-                ? 'border-orange-500 bg-orange-500/40 shadow-[0_0_30px_rgba(249,158,26,0.6)]' 
-                : 'border-slate-700 bg-slate-900/60 group-hover:border-orange-400 group-hover:shadow-[0_0_20px_rgba(249,158,26,0.4)]'
-            }`}>
-              <img 
-                src={hero.portrait} 
-                alt={hero.name}
-                className="absolute inset-0 w-full h-full object-cover object-top scale-[1.15] skew-x-[10deg] transition-transform duration-200 group-hover:scale-[1.25]"
-                loading="lazy"
-              />
-            </div>
-            <p className="mt-2 ml-1 text-[18px] font-black italic text-slate-300 uppercase truncate text-left group-hover:text-white transition-colors">
-              {heroNameMap[hero.key] || hero.name}
-            </p>
-          </button>
+          <div key={hero.key} className="contents">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedHero(hero);
+              }}
+              className={`group relative w-full transition-all duration-75 ${
+                selectedHero?.key === hero.key ? 'scale-110 z-20' : 'hover:scale-110 hover:z-10'
+              }`}
+            >
+              <div className="absolute inset-[-10px] bg-orange-500/0 group-hover:bg-orange-500/20 blur-xl rounded-full transition-all duration-150 pointer-events-none" />
+              
+              <div className={`relative aspect-square skew-x-[-10deg] border transition-all duration-100 overflow-hidden ${
+                selectedHero?.key === hero.key 
+                  ? 'border-orange-500 bg-orange-500/40 shadow-[0_0_30px_rgba(249,158,26,0.6)]' 
+                  : 'border-slate-700 bg-slate-900/60 group-hover:border-orange-400 group-hover:shadow-[0_0_20px_rgba(249,158,26,0.4)]'
+              }`}>
+                <img 
+                  src={hero.portrait} 
+                  alt={hero.name}
+                  className="absolute inset-0 w-full h-full object-cover object-top scale-[1.15] skew-x-[10deg] transition-transform duration-200 group-hover:scale-[1.25]"
+                  loading="lazy"
+                />
+              </div>
+              <p className="mt-2 ml-1 text-sm sm:text-[18px] font-black italic text-slate-300 uppercase truncate text-left group-hover:text-white transition-colors">
+                {heroNameMap[hero.key] || hero.name}
+              </p>
+            </button>
+
+            {/* Mobile Inline Detail View */}
+            {selectedHero?.key === hero.key && (
+              <div 
+                className="sm:hidden col-span-3 bg-slate-900/95 border-2 border-orange-500 p-5 mt-2 mb-6 rounded-xl relative overflow-hidden"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <img src={hero.portrait} className="w-16 h-16 bg-black border border-white/10 rounded-lg object-cover object-top" alt="" />
+                  <div>
+                    <h4 className="text-xl font-black italic uppercase text-white leading-none">
+                      {heroNameMap[hero.key] || hero.name}
+                    </h4>
+                    <p className="text-xs text-blue-400 font-bold mt-1 uppercase tracking-tighter">역할: {roleMap[hero.role]}</p>
+                  </div>
+                  <button onClick={() => setSelectedHero(null)} className="ml-auto text-slate-500">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" /></svg>
+                  </button>
+                </div>
+                
+                <p className="text-orange-500 font-black italic tracking-widest text-[10px] uppercase mb-3">Priority Counter Tactics</p>
+                <div className="grid grid-cols-3 gap-3">
+                  {counters.map((counter, idx) => (
+                    <div key={counter.key} className="flex flex-col items-center">
+                      <div className="w-full aspect-square border border-white/10 bg-black overflow-hidden relative">
+                        <img 
+                          src={counter.portrait} 
+                          className="w-full h-full object-cover object-top scale-[1.15] skew-x-[10deg]" 
+                          alt="" 
+                        />
+                        <div className="absolute top-0 right-0 w-5 h-5 bg-orange-600 text-[10px] font-black flex items-center justify-center text-white">
+                          {idx + 1}
+                        </div>
+                      </div>
+                      <p className="mt-1.5 text-[10px] font-black italic text-slate-400 uppercase truncate w-full text-center">
+                        {heroNameMap[counter.key] || counter.name}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </div>
@@ -136,6 +182,7 @@ function App() {
   return (
     <div 
       ref={containerRef}
+      onClick={() => setSelectedHero(null)}
       className="min-h-screen flex flex-col bg-slate-950 text-white selection:bg-orange-500/30 font-sans overflow-hidden relative"
     >
       <div 
@@ -145,12 +192,15 @@ function App() {
         }}
       />
 
-      <header className="relative pt-10 pb-6 px-12 flex flex-col items-center border-b border-white/5 bg-slate-900/30 z-20 shrink-0">
-        <h1 className="text-5xl font-black italic tracking-tighter text-white mb-6 uppercase">
+      <header className="relative pt-10 pb-6 px-6 sm:px-12 flex flex-col items-center border-b border-white/5 bg-slate-900/30 z-20 shrink-0">
+        <h1 className="text-3xl sm:text-5xl font-black italic tracking-tighter text-white mb-6 uppercase text-center">
           Hero <span className="text-orange-500">Selection</span>
         </h1>
 
-        <div className="w-full max-w-sm relative group skew-x-[-15deg]">
+        <div 
+          className="w-full max-w-sm relative group skew-x-[-15deg]"
+          onClick={(e) => e.stopPropagation()}
+        >
           <input
             type="text"
             placeholder="SEARCH HERO..."
@@ -166,7 +216,7 @@ function App() {
         </div>
       </header>
 
-      <main className={`flex-1 overflow-y-auto overflow-x-hidden px-12 py-8 transition-all duration-500 z-10 scrollbar-thin scrollbar-thumb-orange-500/30 scrollbar-track-transparent ${selectedHero ? 'pb-[38vh]' : 'pb-10'}`}>
+      <main className={`flex-1 overflow-y-auto overflow-x-hidden px-6 sm:px-12 py-8 transition-all duration-500 z-10 scrollbar-thin scrollbar-thumb-orange-500/30 scrollbar-track-transparent ${selectedHero ? 'pb-[38vh]' : 'pb-10'}`}>
         <div className="max-w-[1600px] mx-auto w-full">
           {groupedHeroes.tank.length > 0 && (
             <RoleSection title="Tank" role="tank" heroesList={groupedHeroes.tank} colorClass="bg-blue-500" />
@@ -180,10 +230,14 @@ function App() {
         </div>
       </main>
 
-      <div className={`fixed bottom-0 left-0 right-0 z-50 transition-all duration-500 transform ${
+      {/* Desktop Fixed Drawer */}
+      <div className={`hidden sm:block fixed bottom-0 left-0 right-0 z-50 transition-all duration-500 transform ${
         selectedHero ? 'translate-y-0' : 'translate-y-full'
       }`}>
-        <div className="h-[33vh] bg-slate-900/95 backdrop-blur-2xl border-t-4 border-orange-500 shadow-[0_-20px_80px_rgba(0,0,0,0.8)] relative flex items-center">
+        <div 
+          className="h-[33vh] bg-slate-900/95 backdrop-blur-2xl border-t-4 border-orange-500 shadow-[0_-20px_80px_rgba(0,0,0,0.8)] relative flex items-center"
+          onClick={(e) => e.stopPropagation()}
+        >
           <button 
             onClick={() => setSelectedHero(null)}
             className="absolute top-6 right-8 text-white/50 hover:text-orange-500 transition-colors z-10"
