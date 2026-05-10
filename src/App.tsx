@@ -15,7 +15,6 @@ function App() {
   const [heroes, setHeroes] = useState<APIHero[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedRole, setSelectedRole] = useState<RoleFilter>('all');
   const [selectedHero, setSelectedHero] = useState<APIHero | null>(null);
   
   // 마우스 추적 상태
@@ -56,10 +55,9 @@ function App() {
       const matchesSearch = 
         hero.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         koName.includes(searchQuery);
-      const matchesRole = selectedRole === 'all' || hero.role === selectedRole;
-      return matchesSearch && matchesRole;
+      return matchesSearch;
     });
-  }, [heroes, searchQuery, selectedRole]);
+  }, [heroes, searchQuery]);
 
   // 3. 카운터 영웅 찾기 로직
   const counters = useMemo(() => {
